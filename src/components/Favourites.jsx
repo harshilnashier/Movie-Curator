@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useMemo,useEffect} from 'react'
 import Pagination from './Pagination'
 
 function Favourites() {
@@ -10,18 +10,28 @@ function Favourites() {
   const [search,setSearch]=useState("")
   const [rows,setRows]=useState(5)
   const [currPage,setCurrPage]=useState(1)
-  let genreids = {
+  const genreids = useMemo(() => ({
     28: 'Action',
     12: 'Adventure',
-    16: 'Animation', 35: 'Comedy',
-    80: 'Crime', 99: 'Documentary',
-    18: 'Drama', 10751: 'Family',
-    14: 'Fantasy', 36: 'History',
+    16: 'Animation',
+    35: 'Comedy',
+    80: 'Crime',
+    99: 'Documentary',
+    18: 'Drama',
+    10751: 'Family',
+    14: 'Fantasy',
+    36: 'History',
     27: 'Horror',
-    10402: 'Music', 9648: 'Mystery', 10749: 'Romance', 878: 'Sci-Fi', 10770: 'TV', 53: 'Thriller',
+    10402: 'Music',
+    9648: 'Mystery',
+    10749: 'Romance',
+    878: 'Sci-Fi',
+    10770: 'TV',
+    53: 'Thriller',
     10752: 'War',
     37: 'Western'
-  }
+  }), []);
+
 
 
   
@@ -35,7 +45,7 @@ function Favourites() {
     let temp=favourites.map((movie)=>genreids[movie.genre_ids[0]])
     temp=new Set(temp)
     setGenres(["All Genres",...temp])
-  },[favourites])
+  },[favourites,genreids])
   
   let del=(movie)=>{
     let arr=favourites.filter((m)=>m.id!=movie.id)
@@ -43,7 +53,7 @@ function Favourites() {
     localStorage.setItem("curator",JSON.stringify(arr))
   }
   let filteredFav=[]
-  filteredFav=currGenre=="All Genres"?favourites:favourites.filter((movie)=>genreids[movie.genre_ids[0]]==currGenre)
+  filteredFav=currGenre==="All Genres"?favourites:favourites.filter((movie)=>genreids[movie.genre_ids[0]]===currGenre)
 
   if(rating===-1){
     filteredFav=filteredFav.sort(function(objA,objB){
@@ -86,7 +96,7 @@ function Favourites() {
     <>
     <div className="mt-6 flex justify-center space-x-2">
       {genres.map((val)=>
-        <button className={currGenre==val?'py-1 px-2 bg-blue-400 rounded-lg font-bold text-lg text-white hover:bg-blue-400':'py-1 px-2 bg-gray-400 rounded-lg font-bold text-lg text-white hover:bg-blue-400'}
+        <button className={currGenre===val?'py-1 px-2 bg-blue-400 rounded-lg font-bold text-lg text-white hover:bg-blue-400':'py-1 px-2 bg-gray-400 rounded-lg font-bold text-lg text-white hover:bg-blue-400'}
             onClick={()=>{
               setCurrPage(1)
               setCurGenre(val)}}> 
@@ -105,21 +115,21 @@ function Favourites() {
         <th scope="col" className="px-6 py-4 font-medium text-gray-900">Name</th>
         <th scope="col" className="px-6 py-4 font-medium text-gray-900">
         <div className='flex'>
-        <img src="https://img.icons8.com/external-those-icons-lineal-those-icons/24/000000/external-up-arrows-those-icons-lineal-those-icons-3.png" className="mr-2 cursor-pointer" 
+        <img src="https://img.icons8.com/external-those-icons-lineal-those-icons/24/000000/external-up-arrows-those-icons-lineal-those-icons-3.png" alt="" className="mr-2 cursor-pointer" 
         onClick={()=>{setRating(1) 
         setPopularity(0)}}></img>
         Rating
-        <img src="https://img.icons8.com/external-those-icons-lineal-those-icons/24/000000/external-down-arrows-those-icons-lineal-those-icons-4.png" className="ml-2 mr-2" onClick={()=>{setRating(-1)
+        <img src="https://img.icons8.com/external-those-icons-lineal-those-icons/24/000000/external-down-arrows-those-icons-lineal-those-icons-4.png" alt="" className="ml-2 mr-2" onClick={()=>{setRating(-1)
         setPopularity(0)}
       }></img>
         </div>
         </th>
         <th scope="col" className="px-6 py-4 font-medium text-gray-900">
         <div className='flex'>
-        <img src="https://img.icons8.com/external-those-icons-lineal-those-icons/24/000000/external-up-arrows-those-icons-lineal-those-icons-3.png" className="mr-2 cursor-pointer" onClick={()=>{setRating(0) 
+        <img src="https://img.icons8.com/external-those-icons-lineal-those-icons/24/000000/external-up-arrows-those-icons-lineal-those-icons-3.png" alt="" className="mr-2 cursor-pointer" onClick={()=>{setRating(0) 
         setPopularity(1)}}></img>
         Popularity
-        <img src="https://img.icons8.com/external-those-icons-lineal-those-icons/24/000000/external-down-arrows-those-icons-lineal-those-icons-4.png" className="ml-2 mr-2" onClick={()=>{setRating(0) 
+        <img src="https://img.icons8.com/external-those-icons-lineal-those-icons/24/000000/external-down-arrows-those-icons-lineal-those-icons-4.png" alt="" className="ml-2 mr-2" onClick={()=>{setRating(0) 
         setPopularity(-1)}}></img>
         </div>
         </th>
