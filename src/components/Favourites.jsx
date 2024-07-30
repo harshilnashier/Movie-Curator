@@ -39,7 +39,7 @@ function Favourites() {
           let temp=localStorage.getItem("curator");
           temp=JSON.parse(temp)||[];
           setFavourites([...temp]);
-  })
+  },[setFavourites])
 
   useEffect(()=>{
     let temp=favourites.map((movie)=>genreids[movie.genre_ids[0]])
@@ -48,7 +48,7 @@ function Favourites() {
   },[favourites,genreids])
   
   let del=(movie)=>{
-    let arr=favourites.filter((m)=>m.id!=movie.id)
+    let arr=favourites.filter((m)=>m.id!==movie.id)
     setFavourites([...arr])
     localStorage.setItem("curator",JSON.stringify(arr))
   }
