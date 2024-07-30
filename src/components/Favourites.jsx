@@ -29,7 +29,7 @@ function Favourites() {
           let temp=localStorage.getItem("curator");
           temp=JSON.parse(temp)||[];
           setFavourites([...temp]);
-  },[])
+  })
 
   useEffect(()=>{
     let temp=favourites.map((movie)=>genreids[movie.genre_ids[0]])
@@ -45,20 +45,20 @@ function Favourites() {
   let filteredFav=[]
   filteredFav=currGenre=="All Genres"?favourites:favourites.filter((movie)=>genreids[movie.genre_ids[0]]==currGenre)
 
-  if(rating==-1){
+  if(rating===-1){
     filteredFav=filteredFav.sort(function(objA,objB){
       return objA.vote_average - objB.vote_average
     })
-  }else if(rating==1){
+  }else if(rating===1){
     filteredFav=filteredFav.sort(function(objA,objB){
       return objB.vote_average - objA.vote_average
     })
   }
-  if(popularity==-1){
+  if(popularity===-1){
     filteredFav=filteredFav.sort(function(objA,objB){
       return objA.popularity - objB.popularity
     })
-  }else if(popularity==1){
+  }else if(popularity===1){
     filteredFav=filteredFav.sort(function(objA,objB){
       return objB.popularity - objA.popularity
     })
