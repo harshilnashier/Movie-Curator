@@ -17,7 +17,7 @@ function Banner() {
 
   return (
     <>  
-      {BannerMovie==""?
+      {BannerMovie===""?
       <div className='flex justify-center'>
           <Oval
           height="80"
