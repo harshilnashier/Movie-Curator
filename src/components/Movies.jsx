@@ -39,7 +39,7 @@ const HideEmoji=()=>{
 }
 const removeMovieFromFav=(id)=>{
   let filteredFav=favourites.filter(elem=>{
-    return elem!=id
+    return elem!==id
   })
   setFavourites([...filteredFav])
   localStorage.setItem("curator",JSON.stringify(filteredFav))
@@ -56,7 +56,7 @@ const addMovieToFav=(movie)=>{
         
         <div className="flex flex-wrap justify-center">
           {
-            movies.length==0?<div className='flex justify-center'>
+            movies.length===0?<div className='flex justify-center'>
             <Oval
             height="80"
             width="80"
@@ -76,7 +76,7 @@ const addMovieToFav=(movie)=>{
                 backgroundImage:`url(https://image.tmdb.org/t/p/original/t/p/original/${movie.poster_path})`
               }}>
                 <div className="p-0.5 top-1 right-1 absolute" 
-                style={{display:hover==movie.id?
+                style={{display:hover===movie.id?
                 "block":"none"}}>
                   {
                     favourites.find((m)=>m.id===movie.id)?
